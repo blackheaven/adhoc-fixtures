@@ -1,0 +1,92 @@
+{
+  "nodes": {
+    "flake-utils": {
+      "locked": {
+        "lastModified": 1659877975,
+        "narHash": "sha256-zllb8aq3YO3h8B/U0/J1WBgAL8EX5yWf5pMj3G0NAmc=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "c0e246b9b83f637f4681389ecabcb2681b4f3af0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "flake-utils_2": {
+      "locked": {
+        "lastModified": 1659877975,
+        "narHash": "sha256-zllb8aq3YO3h8B/U0/J1WBgAL8EX5yWf5pMj3G0NAmc=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "c0e246b9b83f637f4681389ecabcb2681b4f3af0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1662286737,
+        "narHash": "sha256-nH/yxStvpgkfg1PAvyiw4wd/Kijr+CBmwRTjxXyYOZw=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "e6a9583fb1193ca92a42dd0fbeeca01a5447ff72",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1662286737,
+        "narHash": "sha256-nH/yxStvpgkfg1PAvyiw4wd/Kijr+CBmwRTjxXyYOZw=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "e6a9583fb1193ca92a42dd0fbeeca01a5447ff72",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": "nixpkgs",
+        "yarl": "yarl"
+      }
+    },
+    "yarl": {
+      "inputs": {
+        "flake-utils": "flake-utils_2",
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1662822024,
+        "narHash": "sha256-pWEGS2Prk1+1k0DxRM0I48HsYHDv3gglPHozzfKUNvI=",
+        "owner": "blackheaven",
+        "repo": "yarl",
+        "rev": "3e8fad8b76f2aae9384d41c66d84df951938be7b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "blackheaven",
+        "repo": "yarl",
+        "type": "github"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
