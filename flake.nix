@@ -7,7 +7,7 @@
     yarl.url = "github:blackheaven/yarl";
   };
 
-  outputs = inputs@{ self, nixpkgs, flake-utils }:
+  outputs = inputs@{ self, nixpkgs, flake-utils, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
@@ -24,7 +24,7 @@
 
         haskellPackages = pkgs.haskell.packages.ghc924.override {
           overrides = hself: hsuper: {
-            yarl = hself.callCabal2nix "yarl" inputs.yarl { };
+            yarl = inputs.yarl.packages.${system}.yarl;
           };
         };
       in

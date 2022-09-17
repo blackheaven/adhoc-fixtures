@@ -16,7 +16,8 @@ library
   default-language:   Haskell2010
   build-depends:
       base == 4.*
-    , yarl == 0.1.*
+    , safe-exceptions == 0.1.*
+    , yarl >= 0.1.1 && < 0.2
   hs-source-dirs: src
   exposed-modules:
       Data.Fixtures.Adhoc
@@ -53,6 +54,7 @@ test-suite adhoc-fixtures-test
   hs-source-dirs: test
   main-is: Spec.hs
   other-modules:
+      Data.Fixtures.AdhocSpec
       Paths_adhoc_fixtures
   autogen-modules:
       Paths_adhoc_fixtures
@@ -85,4 +87,6 @@ test-suite adhoc-fixtures-test
     , hspec
     , hspec-core
     , hspec-discover
+    , safe-exceptions
+    , yarl
   default-language: Haskell2010
