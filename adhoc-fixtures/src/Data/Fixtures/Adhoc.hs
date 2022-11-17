@@ -1,5 +1,6 @@
-{-# OPTIONS_GHC -Wno-redundant-constraints #-}
 {-# LANGUAGE ConstraintKinds #-}
+{-# OPTIONS_GHC -Wno-redundant-constraints #-}
+
 -- |
 -- Module        : Data.Fixtures.Adhoc
 -- Copyright     : Gautier DI FOLCO
@@ -13,14 +14,13 @@
 --
 -- Example:
 --
--- > import Data.Fixtures.Adhoc
--- >
--- > type Person = Record '[Field "name" String, Field "age" Int]
--- >
--- > marvin :: Person
--- > marvin = Field "marvin" :> Field 42 :> RNil
--- >
--- > TODO
+-- > boxFixture ::
+-- >   HasFixture items "tracker" Tracker =>
+-- >   BuilderWith items IO "box" Box
+-- > boxFixture =
+-- >   buildWithClean
+-- >   (\prev -> let box = Box 42 "box00" in addId box.boxKey box.boxId prev.tracker >> return box)
+-- >   (\prev box -> rmId box.boxKey prev.tracker)
 module Data.Fixtures.Adhoc
   ( Builder (..),
     BuilderWith,
@@ -51,7 +51,8 @@ data Builder m items = Builder
 -- | Builder relying on other builder(s)
 type BuilderWith items m (name :: Symbol) a =
   HasNotField name items =>
-  Builder m items -> Builder m (Field name a ': items)
+  Builder m items ->
+  Builder m (Field name a ': items)
 
 -- | Helper around 'HasRecord'
 type HasFixture items (name :: Symbol) a = HasField name (Record items) a
@@ -74,12 +75,12 @@ buildWithClean ::
 buildWithClean create' clean' previous =
   Builder
     { create = do
-        xs <- previous.create
+        xs <- previous . create
         x <- create' xs
         return $ Field x :> xs,
       clean =
         \(Field x :> xs) ->
-          clean' xs x >> previous.clean xs
+          clean' xs x >> previous . clean xs
     }
 
 -- | Simple builder without dependency, no clean operation
@@ -100,12 +101,12 @@ buildClean ::
 buildClean create' clean' previous =
   Builder
     { create = do
-        xs <- previous.create
+        xs <- previous . create
         x <- create'
         return $ Field x :> xs,
       clean =
         \(Field x :> xs) ->
-          clean' x >> previous.clean xs
+          clean' x >> previous . clean xs
     }
 
 -- | Base builder
@@ -138,8 +139,8 @@ infixr 5 &>
 
 -- | Run fixtures with clean up (bracket)
 runWithFixtures :: MonadMask m => Builder m items -> (Record items -> m a) -> m a
-runWithFixtures builder = bracket builder.create builder.clean
+runWithFixtures builder = bracket builder . create builder . clean
 
 -- | Create fixtures (no clean up)
 createFixtures :: Monad m => Builder m items -> (Record items -> m a) -> m a
-createFixtures builder act = builder.create >>= act
+createFixtures builder act = builder . create >>= act

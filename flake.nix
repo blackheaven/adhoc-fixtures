@@ -32,11 +32,16 @@
       {
         packages.adhoc-fixtures =
           # activateBenchmark
-          (haskellPackages.callCabal2nix "adhoc-fixtures" ./. rec {
+          (haskellPackages.callCabal2nix "adhoc-fixtures" ./adhoc-fixtures rec {
             # Dependency overrides go here
           });
+        packages.adhoc-fixtures-hspec =
+          haskellPackages.callCabal2nix "adhoc-fixtures-hspec" ./adhoc-fixtures-hspec rec {
+            # Dependency overrides go here
+            adhoc-fixtures = packages.adhoc-fixtures;
+          };
 
-        defaultPackage = packages.adhoc-fixtures;
+        defaultPackage = packages.adhoc-fixtures-hspec;
 
         devShell =
           let
