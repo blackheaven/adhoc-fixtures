@@ -75,12 +75,12 @@ buildWithClean ::
 buildWithClean create' clean' previous =
   Builder
     { create = do
-        xs <- previous . create
+        xs <- previous.create
         x <- create' xs
         return $ Field x :> xs,
       clean =
         \(Field x :> xs) ->
-          clean' xs x >> previous . clean xs
+          clean' xs x >> previous.clean xs
     }
 
 -- | Simple builder without dependency, no clean operation
@@ -101,12 +101,12 @@ buildClean ::
 buildClean create' clean' previous =
   Builder
     { create = do
-        xs <- previous . create
+        xs <- previous.create
         x <- create'
         return $ Field x :> xs,
       clean =
         \(Field x :> xs) ->
-          clean' x >> previous . clean xs
+          clean' x >> previous.clean xs
     }
 
 -- | Base builder
@@ -139,8 +139,8 @@ infixr 5 &>
 
 -- | Run fixtures with clean up (bracket)
 runWithFixtures :: MonadMask m => Builder m items -> (Record items -> m a) -> m a
-runWithFixtures builder = bracket builder . create builder . clean
+runWithFixtures builder = bracket builder.create builder.clean
 
 -- | Create fixtures (no clean up)
 createFixtures :: Monad m => Builder m items -> (Record items -> m a) -> m a
-createFixtures builder act = builder . create >>= act
+createFixtures builder act = builder.create >>= act
