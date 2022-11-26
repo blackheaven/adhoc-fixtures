@@ -17,7 +17,7 @@ library
   build-depends:
       base == 4.*
     , adhoc-fixtures >= 0.1.0.0 && < 1
-    , hspec >= 2.9.0 && < 2.11
+    , hspec >= 2.7.0 && < 2.11
     , yarl >= 0.1.0.0 && < 1
   hs-source-dirs: src
   exposed-modules:
@@ -85,6 +85,7 @@ test-suite adhoc-fixtures-test
   build-depends:
       base
     , adhoc-fixtures
+    , adhoc-fixtures-hspec
     , hspec
     , hspec-core
     , hspec-discover
