@@ -6,9 +6,7 @@ import Control.Exception.Safe (bracket)
 import Data.Fixtures.Adhoc
 import Data.Fixtures.Adhoc.Hspec
 import Data.IORef
-import Data.Records.Yarl.LinkedList
 import GHC.Exts (IsString (..))
-import GHC.TypeLits
 import Test.Hspec
 
 main :: IO ()
@@ -22,12 +20,12 @@ spec =
         readIORef tracker `shouldReturn` []
       aroundAllWith (withFixtureAppendLift @"tracker" @_ @"box" boxFixture) $ do
         it "Tracker should have one key (added)" $ \fixture ->
-          readIORef fixture . tracker `shouldReturn` [("box00", 42)]
+          readIORef fixture.tracker `shouldReturn` [("box00", 42)]
         aroundAllWith (withFixtureAppend @"book" bookFixture) $ do
           it "Tracker should have two keys (added)" $ \fixture ->
-            readIORef fixture . tracker `shouldReturn` [("book00", 42), ("box00", 42)]
+            readIORef fixture.tracker `shouldReturn` [("book00", 42), ("box00", 42)]
         it "Tracker should have one key (cleaned)" $ \fixture ->
-          readIORef fixture . tracker `shouldReturn` [("box00", 42)]
+          readIORef fixture.tracker `shouldReturn` [("box00", 42)]
       it "Tracker should be empty (start cleaned)" $ \tracker ->
         readIORef tracker `shouldReturn` []
 
@@ -64,8 +62,8 @@ boxFixture ::
   BuilderWith items IO "box" Box
 boxFixture =
   buildWithClean
-    (\prev -> let box = Box 42 "box00" in addId box . boxKey box . boxId prev . tracker >> return box)
-    (\prev box -> rmId box . boxKey prev . tracker)
+    (\prev -> let box = Box 42 "box00" in addId box.boxKey box.boxId prev.tracker >> return box)
+    (\prev box -> rmId box.boxKey prev.tracker)
 
 bookFixture ::
   (HasFixture items "tracker" Tracker, HasFixture items "box" Box) =>
@@ -73,12 +71,12 @@ bookFixture ::
 bookFixture =
   buildWithClean
     ( \prev -> do
-        box <- unsafeGetId "book00" prev . tracker
+        box <- unsafeGetId "book00" prev.tracker
         let book = Book 42 box "book00"
-        addId book . bookKey book . bookId prev . tracker
+        addId book.bookKey book.bookId prev.tracker
         return book
     )
-    (\prev book -> rmId book . bookKey prev . tracker)
+    (\prev book -> rmId book.bookKey prev.tracker)
 
 withIORef :: a -> (IORef a -> IO ()) -> IO ()
 withIORef x =
