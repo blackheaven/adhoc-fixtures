@@ -1,6 +1,6 @@
 cabal-version:       3.0
 name:                adhoc-fixtures-hspec
-version:             0.1.0.1
+version:             0.1.0.2
 author:              Gautier DI FOLCO
 maintainer:          gautier.difolco@gmail.com
 category:            Data
@@ -9,7 +9,7 @@ license:             ISC
 license-file:        LICENSE
 synopsis:            Manage fine grained fixtures
 description:         Helps improves tests crafting per-test fixtures (hspec support)
-Homepage:            http://github.com/blackheaven/adhoc-fixtures/adhoc-fixtures-hspec
+Homepage:            https://github.com/blackheaven/adhoc-fixtures/tree/master/adhoc-fixtures-hspec
 tested-with:         GHC==9.2.4
 
 library
